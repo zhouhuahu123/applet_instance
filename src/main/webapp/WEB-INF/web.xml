@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+    <display-name>applet_instance</display-name>
+
+    <!-- 配置spring 上下文-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:config/spring-context.xml
+        </param-value>
+    </context-param>
+
+    <!-- 配置log4j日志 -->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>
+            classpath:config/properties/log4j.properties
+        </param-value>
+    </context-param>
+
+    <!-- 监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <context-param>
+            <param-name>webAppRootKey</param-name>
+            <param-value>app.root</param-value>
+        </context-param>
+    </listener>
+
+    <!-- 字符编码配置 -->
+    <filter>
+        <filter-name>SpringEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SpringEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- spring mvc 相关配置 -->
+    <servlet>
+        <servlet-name>SpringMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                classpath:/config/spring-mvc.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SpringMVC</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>

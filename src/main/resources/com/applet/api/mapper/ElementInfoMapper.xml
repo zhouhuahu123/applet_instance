@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.applet.api.mapper.ElementInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.applet.api.entity.ElementInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="applet_id" property="appletId" jdbcType="INTEGER" />
+    <result column="template_page_id" property="templatePageId" jdbcType="INTEGER" />
+    <result column="element_type_id" property="elementTypeId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="old_price" property="oldPrice" jdbcType="DOUBLE" />
+    <result column="new_price" property="newPrice" jdbcType="DOUBLE" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, applet_id, template_page_id, element_type_id, title, name, img_url, content, 
+    old_price, new_price, start_date, end_date, amount, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.applet.api.entity.ElementInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bus_element
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="PageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bus_element
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bus_element
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.applet.api.entity.ElementInfoExample" >
+    delete from bus_element
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.applet.api.entity.ElementInfo" >
+    insert into bus_element (id, applet_id, template_page_id, 
+      element_type_id, title, name, 
+      img_url, content, old_price, 
+      new_price, start_date, end_date, 
+      amount, status)
+    values (#{id,jdbcType=INTEGER}, #{appletId,jdbcType=INTEGER}, #{templatePageId,jdbcType=INTEGER}, 
+      #{elementTypeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{oldPrice,jdbcType=DOUBLE}, 
+      #{newPrice,jdbcType=DOUBLE}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{amount,jdbcType=INTEGER}, #{status,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.applet.api.entity.ElementInfo" useGeneratedKeys="true" keyProperty="id" >
+    insert into bus_element
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appletId != null" >
+        applet_id,
+      </if>
+      <if test="templatePageId != null" >
+        template_page_id,
+      </if>
+      <if test="elementTypeId != null" >
+        element_type_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="oldPrice != null" >
+        old_price,
+      </if>
+      <if test="newPrice != null" >
+        new_price,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appletId != null" >
+        #{appletId,jdbcType=INTEGER},
+      </if>
+      <if test="templatePageId != null" >
+        #{templatePageId,jdbcType=INTEGER},
+      </if>
+      <if test="elementTypeId != null" >
+        #{elementTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPrice != null" >
+        #{oldPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="newPrice != null" >
+        #{newPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.applet.api.entity.ElementInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bus_element
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bus_element
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.appletId != null" >
+        applet_id = #{record.appletId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templatePageId != null" >
+        template_page_id = #{record.templatePageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.elementTypeId != null" >
+        element_type_id = #{record.elementTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgUrl != null" >
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldPrice != null" >
+        old_price = #{record.oldPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.newPrice != null" >
+        new_price = #{record.newPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.startDate != null" >
+        start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null" >
+        end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bus_element
+    set id = #{record.id,jdbcType=INTEGER},
+      applet_id = #{record.appletId,jdbcType=INTEGER},
+      template_page_id = #{record.templatePageId,jdbcType=INTEGER},
+      element_type_id = #{record.elementTypeId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      old_price = #{record.oldPrice,jdbcType=DOUBLE},
+      new_price = #{record.newPrice,jdbcType=DOUBLE},
+      start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      amount = #{record.amount,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.applet.api.entity.ElementInfo" >
+    update bus_element
+    <set >
+      <if test="appletId != null" >
+        applet_id = #{appletId,jdbcType=INTEGER},
+      </if>
+      <if test="templatePageId != null" >
+        template_page_id = #{templatePageId,jdbcType=INTEGER},
+      </if>
+      <if test="elementTypeId != null" >
+        element_type_id = #{elementTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPrice != null" >
+        old_price = #{oldPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="newPrice != null" >
+        new_price = #{newPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.applet.api.entity.ElementInfo" >
+    update bus_element
+    set applet_id = #{appletId,jdbcType=INTEGER},
+      template_page_id = #{templatePageId,jdbcType=INTEGER},
+      element_type_id = #{elementTypeId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      old_price = #{oldPrice,jdbcType=DOUBLE},
+      new_price = #{newPrice,jdbcType=DOUBLE},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="PageSuffix" >
+    <if test="page != null" >
+      limit #{page.begin},#{page.length}
+    </if>
+  </sql>
+</mapper>

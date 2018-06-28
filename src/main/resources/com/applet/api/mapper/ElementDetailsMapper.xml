@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.applet.api.mapper.ElementDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.applet.api.entity.ElementDetails" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="element_id" property="elementId" jdbcType="INTEGER" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="mail_price" property="mailPrice" jdbcType="DOUBLE" />
+    <result column="img_url1" property="imgUrl1" jdbcType="VARCHAR" />
+    <result column="describe1" property="describe1" jdbcType="VARCHAR" />
+    <result column="img_url2" property="imgUrl2" jdbcType="VARCHAR" />
+    <result column="describe2" property="describe2" jdbcType="VARCHAR" />
+    <result column="img_url3" property="imgUrl3" jdbcType="VARCHAR" />
+    <result column="describe3" property="describe3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, element_id, color, size, mail_price, img_url1, describe1, img_url2, describe2, 
+    img_url3, describe3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.applet.api.entity.ElementDetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bus_element_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="PageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bus_element_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bus_element_details
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.applet.api.entity.ElementDetailsExample" >
+    delete from bus_element_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.applet.api.entity.ElementDetails" >
+    insert into bus_element_details (id, element_id, color, 
+      size, mail_price, img_url1, 
+      describe1, img_url2, describe2, 
+      img_url3, describe3)
+    values (#{id,jdbcType=INTEGER}, #{elementId,jdbcType=INTEGER}, #{color,jdbcType=VARCHAR}, 
+      #{size,jdbcType=VARCHAR}, #{mailPrice,jdbcType=DOUBLE}, #{imgUrl1,jdbcType=VARCHAR}, 
+      #{describe1,jdbcType=VARCHAR}, #{imgUrl2,jdbcType=VARCHAR}, #{describe2,jdbcType=VARCHAR}, 
+      #{imgUrl3,jdbcType=VARCHAR}, #{describe3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.applet.api.entity.ElementDetails" useGeneratedKeys="true" keyProperty="id" >
+    insert into bus_element_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="elementId != null" >
+        element_id,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="mailPrice != null" >
+        mail_price,
+      </if>
+      <if test="imgUrl1 != null" >
+        img_url1,
+      </if>
+      <if test="describe1 != null" >
+        describe1,
+      </if>
+      <if test="imgUrl2 != null" >
+        img_url2,
+      </if>
+      <if test="describe2 != null" >
+        describe2,
+      </if>
+      <if test="imgUrl3 != null" >
+        img_url3,
+      </if>
+      <if test="describe3 != null" >
+        describe3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="elementId != null" >
+        #{elementId,jdbcType=INTEGER},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="mailPrice != null" >
+        #{mailPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="imgUrl1 != null" >
+        #{imgUrl1,jdbcType=VARCHAR},
+      </if>
+      <if test="describe1 != null" >
+        #{describe1,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl2 != null" >
+        #{imgUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="describe2 != null" >
+        #{describe2,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl3 != null" >
+        #{imgUrl3,jdbcType=VARCHAR},
+      </if>
+      <if test="describe3 != null" >
+        #{describe3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.applet.api.entity.ElementDetailsExample" resultType="java.lang.Integer" >
+    select count(*) from bus_element_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bus_element_details
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.elementId != null" >
+        element_id = #{record.elementId,jdbcType=INTEGER},
+      </if>
+      <if test="record.color != null" >
+        color = #{record.color,jdbcType=VARCHAR},
+      </if>
+      <if test="record.size != null" >
+        size = #{record.size,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailPrice != null" >
+        mail_price = #{record.mailPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.imgUrl1 != null" >
+        img_url1 = #{record.imgUrl1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describe1 != null" >
+        describe1 = #{record.describe1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgUrl2 != null" >
+        img_url2 = #{record.imgUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describe2 != null" >
+        describe2 = #{record.describe2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgUrl3 != null" >
+        img_url3 = #{record.imgUrl3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describe3 != null" >
+        describe3 = #{record.describe3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bus_element_details
+    set id = #{record.id,jdbcType=INTEGER},
+      element_id = #{record.elementId,jdbcType=INTEGER},
+      color = #{record.color,jdbcType=VARCHAR},
+      size = #{record.size,jdbcType=VARCHAR},
+      mail_price = #{record.mailPrice,jdbcType=DOUBLE},
+      img_url1 = #{record.imgUrl1,jdbcType=VARCHAR},
+      describe1 = #{record.describe1,jdbcType=VARCHAR},
+      img_url2 = #{record.imgUrl2,jdbcType=VARCHAR},
+      describe2 = #{record.describe2,jdbcType=VARCHAR},
+      img_url3 = #{record.imgUrl3,jdbcType=VARCHAR},
+      describe3 = #{record.describe3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.applet.api.entity.ElementDetails" >
+    update bus_element_details
+    <set >
+      <if test="elementId != null" >
+        element_id = #{elementId,jdbcType=INTEGER},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="mailPrice != null" >
+        mail_price = #{mailPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="imgUrl1 != null" >
+        img_url1 = #{imgUrl1,jdbcType=VARCHAR},
+      </if>
+      <if test="describe1 != null" >
+        describe1 = #{describe1,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl2 != null" >
+        img_url2 = #{imgUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="describe2 != null" >
+        describe2 = #{describe2,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl3 != null" >
+        img_url3 = #{imgUrl3,jdbcType=VARCHAR},
+      </if>
+      <if test="describe3 != null" >
+        describe3 = #{describe3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.applet.api.entity.ElementDetails" >
+    update bus_element_details
+    set element_id = #{elementId,jdbcType=INTEGER},
+      color = #{color,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      mail_price = #{mailPrice,jdbcType=DOUBLE},
+      img_url1 = #{imgUrl1,jdbcType=VARCHAR},
+      describe1 = #{describe1,jdbcType=VARCHAR},
+      img_url2 = #{imgUrl2,jdbcType=VARCHAR},
+      describe2 = #{describe2,jdbcType=VARCHAR},
+      img_url3 = #{imgUrl3,jdbcType=VARCHAR},
+      describe3 = #{describe3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="PageSuffix" >
+    <if test="page != null" >
+      limit #{page.begin},#{page.length}
+    </if>
+  </sql>
+</mapper>

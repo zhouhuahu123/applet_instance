@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.applet.api.mapper.TemplateInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.applet.api.entity.TemplateInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="browse" property="browse" jdbcType="INTEGER" />
+    <result column="praise" property="praise" jdbcType="INTEGER" />
+    <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+    <result column="preview_url" property="previewUrl" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="OTHER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.applet.api.entity.TemplateInfo" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, type, browse, praise, file_path, preview_url, price, create_date, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.applet.api.entity.TemplateInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bus_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.applet.api.entity.TemplateInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bus_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="PageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bus_template
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bus_template
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.applet.api.entity.TemplateInfoExample" >
+    delete from bus_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.applet.api.entity.TemplateInfo" >
+    insert into bus_template (id, title, type, 
+      browse, praise, file_path, 
+      preview_url, price, create_date, 
+      status, remark)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{browse,jdbcType=INTEGER}, #{praise,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR}, 
+      #{previewUrl,jdbcType=VARCHAR}, #{price,jdbcType=OTHER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=BIT}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.applet.api.entity.TemplateInfo" useGeneratedKeys="true" keyProperty="id" >
+    insert into bus_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="browse != null" >
+        browse,
+      </if>
+      <if test="praise != null" >
+        praise,
+      </if>
+      <if test="filePath != null" >
+        file_path,
+      </if>
+      <if test="previewUrl != null" >
+        preview_url,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="browse != null" >
+        #{browse,jdbcType=INTEGER},
+      </if>
+      <if test="praise != null" >
+        #{praise,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="previewUrl != null" >
+        #{previewUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=OTHER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.applet.api.entity.TemplateInfoExample" resultType="java.lang.Integer" >
+    select count(*) from bus_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bus_template
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browse != null" >
+        browse = #{record.browse,jdbcType=INTEGER},
+      </if>
+      <if test="record.praise != null" >
+        praise = #{record.praise,jdbcType=INTEGER},
+      </if>
+      <if test="record.filePath != null" >
+        file_path = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.previewUrl != null" >
+        preview_url = #{record.previewUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=OTHER},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update bus_template
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      browse = #{record.browse,jdbcType=INTEGER},
+      praise = #{record.praise,jdbcType=INTEGER},
+      file_path = #{record.filePath,jdbcType=VARCHAR},
+      preview_url = #{record.previewUrl,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=OTHER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=BIT},
+      remark = #{record.remark,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bus_template
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      browse = #{record.browse,jdbcType=INTEGER},
+      praise = #{record.praise,jdbcType=INTEGER},
+      file_path = #{record.filePath,jdbcType=VARCHAR},
+      preview_url = #{record.previewUrl,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=OTHER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.applet.api.entity.TemplateInfo" >
+    update bus_template
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="browse != null" >
+        browse = #{browse,jdbcType=INTEGER},
+      </if>
+      <if test="praise != null" >
+        praise = #{praise,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="previewUrl != null" >
+        preview_url = #{previewUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=OTHER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.applet.api.entity.TemplateInfo" >
+    update bus_template
+    set title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      browse = #{browse,jdbcType=INTEGER},
+      praise = #{praise,jdbcType=INTEGER},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      preview_url = #{previewUrl,jdbcType=VARCHAR},
+      price = #{price,jdbcType=OTHER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.applet.api.entity.TemplateInfo" >
+    update bus_template
+    set title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      browse = #{browse,jdbcType=INTEGER},
+      praise = #{praise,jdbcType=INTEGER},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      preview_url = #{previewUrl,jdbcType=VARCHAR},
+      price = #{price,jdbcType=OTHER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="PageSuffix" >
+    <if test="page != null" >
+      limit #{page.begin},#{page.length}
+    </if>
+  </sql>
+</mapper>
